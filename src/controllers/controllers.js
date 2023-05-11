@@ -1,3 +1,7 @@
+import { db } from "../database/database.config";
+// importar algo do ID?
+import { jogosSchema, clientesSchema, alugueisSchema } from "../schemas/schemas.js";
+
 export async function inserirJogo(req, res) {
     try {
     //   const receitas = await db.query("SELECT * FROM receitas");
@@ -78,7 +82,7 @@ export async function inserirJogo(req, res) {
       res.status(500).send(err.message);
     }
   }
-  
+
   export async function apagarAluguel(req, res) {
     try {
     //   const receitas = await db.query("SELECT * FROM receitas");
