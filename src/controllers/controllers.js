@@ -66,13 +66,14 @@ export async function inserirJogo(req, res) {
     }
 
   export async function buscarClienteId(req, res) {
+    const {id} = req.params;
     try {
-    //   const receitas = await db.query("SELECT * FROM receitas");
-    //   res.send(receitas.rows);
-    } catch (err) {
-      res.status(500).send(err.message);
+        const clientes = await db.query("SELECT * FROM customers WHERE id = $1", [id]);
+        res.send(clientes.rows[0]);
+      } catch (err) {
+        res.status(500).send(err.message);
+      }
     }
-  }
 
   export async function atualizarCliente(req, res) {
     try {
