@@ -70,7 +70,19 @@ export async function inserirCliente(req, res) {
 export async function listarClientes(req, res) {
   try {
     const clientes = await db.query("SELECT * FROM customers");
-    res.send(clientes.rows);
+    const response = clientes.rows;
+  
+    const birthday = new Date(response.birthday);
+    // Formatting date
+    let day = birthday.getUTCDate();
+    dar = day.toString().length == 1 ? '0' + day : day;
+    let month = birthday.getUTCMonth() + 1;
+    month = month.toString().length == 1 ? '0' + month : month;
+    const year = birthday.getUTCFullYear();
+
+    // Replace original date for formatted date
+    response.birthday = `${year}-${month}-${day}`
+    res.send(response);
   } catch (err) {
     res.status(500).send(err.message);
   }
