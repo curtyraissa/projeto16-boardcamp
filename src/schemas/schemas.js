@@ -19,7 +19,7 @@ export const clientesSchema = joi.object({
     .string()
     .pattern(/^[0-9]{11}$/)
     .required(),
-  birthday: joi.date().iso().required(),
+  birthday: joi.date().required(),
 });
 
 //Alugueis
