@@ -4,9 +4,17 @@ import { jogosSchema, clientesSchema, alugueisSchema } from "../schemas/schemas.
 
 export async function inserirJogo(req, res) {
     const { name, image, pricePerDay, stockTotal } = req.body;
+
+  const validation = jogosSchema.validate(req.body, { abortEarly: false });
+
+  if (validation.error) {
+    const errors = validation.error.details.map((d) => d.message);
+    return res.status(400).send(errors);
+  }
+
     try {
-    //   const jogos = await db.query("INSERT INTO games (name, image, pricePerDay, stockTotal) VALUES (25, 'fulano@hotmail.com', '123456');");
-    //   res.send(receitas.rows);
+      const jogos = await db.query(`INSERT INTO games ("name", "image", "pricePerDay", "stockTotal") VALUES ($1, $2, $3, $4), [name, image, pricePerDay, stockTotal];`);
+      res.sendStatus(201);
     } catch (err) {
       res.status(500).send(err.message);
     }
