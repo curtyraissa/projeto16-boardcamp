@@ -79,9 +79,7 @@ export async function listarClientes(req, res) {
 export async function buscarClienteId(req, res) {
   const { id } = req.params;
   try {
-    const clientes = await db.query("SELECT * FROM customers WHERE id = $1", [
-      id,
-    ]);
+    const clientes = await db.query("SELECT * FROM customers WHERE id = $1", [id]);
     if (!clientes) return res.sendStatus(404);
     res.send(clientes.rows[0]);
   } catch (err) {
@@ -107,7 +105,7 @@ export async function atualizarCliente(req, res) {
     if (cpfExiste.length !== 0) return res.sendStatus(409);
 
     await db.query(
-      `UPDATE customers SET "name"=$1, "phone"=$2, "cpf"=$3, "birthday"=$4 WHERE id=$5)`,
+      `UPDATE customers SET name=$1, phone=$2, cpf=$3, birthday=$4 WHERE id=$5)`,
       [name, phone, cpf, birthday, id]
     );
     res.sendStatus(200);
