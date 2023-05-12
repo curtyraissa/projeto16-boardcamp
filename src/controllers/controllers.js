@@ -75,7 +75,7 @@ export async function listarClientes(req, res) {
     const birthday = new Date(response.birthday);
     // Formatting date
     let day = birthday.getUTCDate();
-    dar = day.toString().length == 1 ? '0' + day : day;
+    day = day.toString().length == 1 ? '0' + day : day;
     let month = birthday.getUTCMonth() + 1;
     month = month.toString().length == 1 ? '0' + month : month;
     const year = birthday.getUTCFullYear();
@@ -98,7 +98,7 @@ export async function buscarClienteId(req, res) {
       const birthday = new Date(response.birthday);
       // Formatting date
       let day = birthday.getUTCDate();
-      dar = day.toString().length == 1 ? '0' + day : day;
+      day = day.toString().length == 1 ? '0' + day : day;
       let month = birthday.getUTCMonth() + 1;
       month = month.toString().length == 1 ? '0' + month : month;
       const year = birthday.getUTCFullYear();
