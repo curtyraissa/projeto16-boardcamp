@@ -69,7 +69,7 @@ export async function inserirCliente(req, res) {
 
 export async function listarClientes(req, res) {
   try {
-    const clientes = await db.query("SELECT (id, name, phone, cpf, to_char(birthday, 'YYYY-MM-DD')) FROM customers");
+    const clientes = await db.query("SELECT * FROM customers");
     res.send(clientes.rows);
   } catch (err) {
     res.status(500).send(err.message);
@@ -77,15 +77,27 @@ export async function listarClientes(req, res) {
 }
 
 export async function buscarClienteId(req, res) {
-  const { id } = req.params;
-  try {
-    const clientes = await db.query("SELECT * FROM customers WHERE id = $1", [id]);
-    if (!clientes) return res.sendStatus(404);
-    res.send(clientes.rows[0]);
-  } catch (err) {
-    res.status(500).send(err.message);
+    const { id } = req.params;
+    try {
+      const clientes = await db.query("SELECT * FROM customers WHERE id = $1", [id]);
+      if (!clientes) return res.sendStatus(404);
+      const response = clientes.rows[0];
+  
+      const birthday = new Date(response.birthday);
+      // Formatting date
+      let day = birthday.getUTCDate();
+      dar = day.toString().length == 1 ? '0' + day : day;
+      let month = birthday.getUTCMonth() + 1;
+      month = month.toString().length == 1 ? '0' + month : month;
+      const year = birthday.getUTCFullYear();
+  
+      // Replace original date for formatted date
+      response.birthday = `${year}-${month}-${day}`
+      res.send(response);
+    } catch (err) {
+      res.status(500).send(err.message);
+    }
   }
-}
 
 export async function atualizarCliente(req, res) {
   const { name, phone, cpf, birthday } = req.body;
