@@ -34,13 +34,27 @@ export async function inserirJogo(req, res) {
   }
 
   export async function inserirCliente(req, res) {
-    try {
-    //   const receitas = await db.query("SELECT * FROM receitas");
-    //   res.send(receitas.rows);
-    } catch (err) {
-      res.status(500).send(err.message);
+    const { name, phone, cpf, birthday } = req.body;
+
+    const validation = clientesSchema.validate(req.body, { abortEarly: false });
+  
+    if (validation.error) {
+      const errors = validation.error.details.map((d) => d.message);
+      return res.status(400).send(errors);
     }
-  }
+  
+      try {
+          const cpfExiste = (await db.query('SELECT * FROM customers WHERE cpf = $1', [cpf])).rows;
+          if(cpfExiste.length !==0) return res.sendStatus(409);
+          
+        await db.query(`INSERT INTO customers ("name", "phone", "cpf", "birthday") VALUES ($1, $2, $3, $4)`, [name, phone, cpf, birthday]);
+        res.sendStatus(201);
+  
+      } catch (err) {
+        res.status(500).send(err.message);
+      }
+    }
+  
 
   export async function listarClientes(req, res) {
     try {
