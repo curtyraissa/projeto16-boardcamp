@@ -1,4 +1,4 @@
-import { db } from "../database/database.config";
+import { db } from "../database/database.config.js";
 // importar algo do ID?
 import { jogosSchema, clientesSchema, alugueisSchema } from "../schemas/schemas.js";
 
