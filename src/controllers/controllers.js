@@ -44,12 +44,12 @@ export async function inserirJogo(req, res) {
 
   export async function listarClientes(req, res) {
     try {
-    //   const receitas = await db.query("SELECT * FROM receitas");
-    //   res.send(receitas.rows);
-    } catch (err) {
-      res.status(500).send(err.message);
+        const clientes = await db.query("SELECT * FROM customers");
+        res.send(clientes.rows);
+      } catch (err) {
+        res.status(500).send(err.message);
+      }
     }
-  }
 
   export async function buscarClienteId(req, res) {
     try {
