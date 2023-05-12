@@ -82,7 +82,7 @@ export async function buscarClienteId(req, res) {
     const clientes = await db.query("SELECT * FROM customers WHERE id = $1", [
       id,
     ]);
-    if(!clientes) return res.sendStatus(404);
+    if (!clientes) return res.sendStatus(404);
     res.send(clientes.rows[0]);
   } catch (err) {
     res.status(500).send(err.message);
@@ -106,11 +106,11 @@ export async function atualizarCliente(req, res) {
     ).rows;
     if (cpfExiste.length !== 0) return res.sendStatus(409);
 
-    const clientes = await db.query(
-        `UPDATE customers SET "name"=$1, "phone"=$2, "cpf"=$3, "birthday"=$4 WHERE id=$5)`,
-        [name, phone, cpf, birthday, id]
-      );
-    res.status(200).send(clientes.rows[0]);
+    await db.query(
+      `UPDATE customers SET "name"=$1, "phone"=$2, "cpf"=$3, "birthday"=$4 WHERE id=$5)`,
+      [name, phone, cpf, birthday, id]
+    );
+    res.sendStatus(200);
   } catch (err) {
     res.status(500).send(err.message);
   }
