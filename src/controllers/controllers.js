@@ -13,8 +13,12 @@ export async function inserirJogo(req, res) {
   }
 
     try {
-      const jogos = await db.query(`INSERT INTO games ("name", "image", "pricePerDay", "stockTotal") VALUES ($1, $2, $3, $4), [name, image, pricePerDay, stockTotal];`);
+        const jogoExiste = (await db.query('SELECT * FROM games WHERE name = $1', [name])).rows;
+        if(jogoExiste.length !==0) return res.sendStatus(409);
+        
+      await db.query(`INSERT INTO games (name, image, pricePerDay, stockTotal) VALUES ($1, $2, $3, $4), [name, image, pricePerDay, stockTotal];`);
       res.sendStatus(201);
+
     } catch (err) {
       res.status(500).send(err.message);
     }
