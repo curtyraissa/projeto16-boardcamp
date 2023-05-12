@@ -69,7 +69,7 @@ export async function inserirCliente(req, res) {
 
 export async function listarClientes(req, res) {
   try {
-    const clientes = await db.query("SELECT * FROM customers");
+    const clientes = await db.query("SELECT (id, name, phone, cpf, to_char(birthday, 'YYYY-MM-DD')) FROM customers");
     res.send(clientes.rows);
   } catch (err) {
     res.status(500).send(err.message);
