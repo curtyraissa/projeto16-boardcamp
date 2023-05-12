@@ -23,7 +23,7 @@ export async function inserirJogo(req, res) {
     if (jogoExiste.length !== 0) return res.sendStatus(409);
 
     await db.query(
-      `INSERT INTO games ("name", "image", "pricePerDay", "stockTotal") VALUES ($1, $2, $3, $4)`,
+      `INSERT INTO games (name, image, "pricePerDay", "stockTotal") VALUES ($1, $2, $3, $4)`,
       [name, image, pricePerDay, stockTotal]
     );
     res.sendStatus(201);
@@ -58,7 +58,7 @@ export async function inserirCliente(req, res) {
     if (cpfExiste.length !== 0) return res.sendStatus(409);
 
     await db.query(
-      `INSERT INTO customers ("name", "phone", "cpf", "birthday") VALUES ($1, $2, $3, $4)`,
+      `INSERT INTO customers (name, phone, cpf, birthday) VALUES ($1, $2, $3, $4)`,
       [name, phone, cpf, birthday]
     );
     res.sendStatus(201);
