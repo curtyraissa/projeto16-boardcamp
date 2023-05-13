@@ -113,7 +113,7 @@ export async function atualizarCliente(req, res) {
 
   try {
     const cpfExiste = (
-      await db.query("SELECT * FROM customers WHERE cpf = $1", [cpf])
+      await db.query("SELECT * FROM customers WHERE cpf=$1 AND id!=$2", [cpf, id])
     ).rows;
     if (cpfExiste.rowCount) return res.sendStatus(409);
 
