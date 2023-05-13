@@ -138,10 +138,17 @@ export async function inserirAluguel(req, res) {
     }
   
     try {
-    //   const cpfExiste = (
-    //     await db.query("SELECT * FROM customers WHERE cpf = $1", [cpf])
-    //   ).rows;
-    //   if (cpfExiste.length !== 0) return res.sendStatus(409);
+        let returnDate = null;
+        let delayFee = null;
+        
+      const clienteExiste = (await db.query("SELECT * FROM customers WHERE id = $1", [customerId])).rows;
+      if (clienteExiste.length == 0) return res.sendStatus(400);
+
+      const jogoExiste = (await db.query("SELECT * FROM games WHERE id = $1", [gameId])).rows;
+      if (jogoExiste.length == 0) return res.sendStatus(400);
+
+    //   const clienteExiste = (await db.query("SELECT * FROM customers WHERE id = $1", [customerId])).rows;
+    //   if (clienteExiste.length == 0) return res.sendStatus(400);
   
       await db.query(
         `INSERT INTO customers ("customerId", "gameId", "rentDate", "daysRented", "returnDate", "originalPrice", "delayFee") VALUES ($1, $2, $3, $4, $5, $6, $7)`,
