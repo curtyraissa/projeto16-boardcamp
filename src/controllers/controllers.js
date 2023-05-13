@@ -81,7 +81,7 @@ export async function buscarClienteId(req, res) {
     const { id } = req.params;
     try {
       const clientes = await db.query("SELECT * FROM customers WHERE id = $1", [id]);
-      if (!clientes) return res.sendStatus(404);
+      if (!clientes.rows) return res.sendStatus(404);
       const response = clientes.rows[0];
   
       const birthday = new Date(response.birthday);
