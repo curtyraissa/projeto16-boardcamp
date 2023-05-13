@@ -70,19 +70,8 @@ export async function inserirCliente(req, res) {
 export async function listarClientes(req, res) {
   try {
     const clientes = await db.query("SELECT * FROM customers");
-    const response = clientes.rows;
-  
-    const birthday = new Date(response.birthday);
-    // Formatting date
-    let day = birthday.getUTCDate();
-    day = day.toString().length == 1 ? '0' + day : day;
-    let month = birthday.getUTCMonth() + 1;
-    month = month.toString().length == 1 ? '0' + month : month;
-    const year = birthday.getUTCFullYear();
-
-    // Replace original date for formatted date
-    response.birthday = `${year}-${month}-${day}`
-    res.send(response);
+    const aniversario = clientes.rows.map(item => ({...item,  birthday: new Date(item.birthday).toISOString().split('T')[0]  }))
+    res.send(aniversario);
   } catch (err) {
     res.status(500).send(err.message);
   }
