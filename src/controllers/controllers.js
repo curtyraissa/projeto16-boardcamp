@@ -175,9 +175,14 @@ export async function finalizarAluguel(req, res) {
 }
 
 export async function apagarAluguel(req, res) {
+    const {id} = req.params;
   try {
-    //   const receitas = await db.query("SELECT * FROM receitas");
-    //   res.send(receitas.rows);
+    const idExiste = await db.query(`SELECT * FROM rentals WHERE id=$1`,[id]);
+    if(idExiste.rows.length === 0) return res.sendStatus(404);
+    if(idExiste.rows[0].returnDate === null) return res.sendStatus(400);
+
+    await db.query(`DELETE FROM rentals WHERE id=$1`,[id])
+    res.sendStatus(200);
   } catch (err) {
     res.status(500).send(err.message);
   }
