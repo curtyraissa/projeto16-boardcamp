@@ -115,7 +115,7 @@ export async function atualizarCliente(req, res) {
     const cpfExiste = (
       await db.query("SELECT * FROM customers WHERE cpf = $1", [cpf])
     ).rows;
-    if (cpfExiste.length > 0) return res.sendStatus(409);
+    if (cpfExiste) return res.sendStatus(409);
 
     await db.query(
       `UPDATE customers SET name=$1, phone=$2, cpf=$3, birthday=$4 WHERE id=$5)`,
