@@ -156,7 +156,7 @@ export async function inserirAluguel(req, res) {
       if (jogoDisponivel.rows.length >= jogoExiste.rows[0].stockTotal) return res.sendStatus(400);
   
       await db.query(
-        `INSERT INTO customers ("customerId", "gameId", "rentDate", "daysRented", "returnDate", "originalPrice", "delayFee") VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        `INSERT INTO rentals ("customerId", "gameId", "rentDate", "daysRented", "returnDate", "originalPrice", "delayFee") VALUES ($1, $2, $3, $4, $5, $6, $7)`,
         [customerId, gameId, rentDate, daysRented, returnDate, originalPrice, delayFee]
       );
       res.sendStatus(201);
