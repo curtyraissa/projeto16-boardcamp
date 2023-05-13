@@ -1,10 +1,5 @@
 import { db } from "../database/database.config.js";
-// importar algo do ID?
-import {
-  jogosSchema,
-  clientesSchema,
-  alugueisSchema,
-} from "../schemas/schemas.js";
+import {jogosSchema, clientesSchema, alugueisSchema} from "../schemas/schemas.js";
 
 export async function inserirJogo(req, res) {
   const { name, image, pricePerDay, stockTotal } = req.body;
@@ -133,13 +128,30 @@ export async function listarAlugueis(req, res) {
 }
 
 export async function inserirAluguel(req, res) {
-  try {
-    //   const receitas = await db.query("SELECT * FROM receitas");
-    //   res.send(receitas.rows);
-  } catch (err) {
-    res.status(500).send(err.message);
+    const { customerId, gameId, daysRented } = req.body;
+
+    const validation = alugueisSchema.validate(req.body, { abortEarly: false });
+  
+    if (validation.error) {
+      const errors = validation.error.details.map((d) => d.message);
+      return res.status(400).send(errors);
+    }
+  
+    try {
+    //   const cpfExiste = (
+    //     await db.query("SELECT * FROM customers WHERE cpf = $1", [cpf])
+    //   ).rows;
+    //   if (cpfExiste.length !== 0) return res.sendStatus(409);
+  
+      await db.query(
+        `INSERT INTO customers ("customerId", "gameId", "rentDate", "daysRented", "returnDate", "originalPrice", "delayFee") VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        [customerId, gameId, rentDate, daysRented, returnDate, originalPrice, delayFee]
+      );
+      res.sendStatus(201);
+    } catch (err) {
+      res.status(500).send(err.message);
+    }
   }
-}
 
 export async function finalizarAluguel(req, res) {
   try {
