@@ -136,40 +136,38 @@ export async function listarAlugueis(req, res) {
     JOIN customers ON rentals."customerId" = customers.id 
     JOIN games ON rentals."gameId" = games.id;`);
 
-    const alugueis = resultado.rows;
-    res.send(alugueis);
 
-    // const alugueis = resultado.rows.map(row => {
-    //     const { 
-    //         id, 
-    //         customerId, 
-    //         gameId, 
-    //         rentDate, 
-    //         daysRented, 
-    //         returnDate, 
-    //         originalPrice, 
-    //         delayFee, 
-    //         nomeCliente, 
-    //         nomeJogo
-    //     } = row;
+    const alugueis = resultado.rows.map(row => {
+        const { 
+            id, 
+            customerId, 
+            gameId, 
+            rentDate, 
+            daysRented, 
+            returnDate, 
+            originalPrice, 
+            delayFee, 
+            nomeCliente, 
+            nomeJogo
+        } = row;
         
-    //     const clientes = { id: customerId, name: nomeCliente };
-    //     const jogos = { id: gameId, name: nomeJogo };
+        const clientes = { id: customerId, name: nomeCliente };
+        const jogos = { id: gameId, name: nomeJogo };
         
-    //     return { 
-    //         id, 
-    //         customerId, 
-    //         gameId, 
-    //         rentDate, 
-    //         daysRented, 
-    //         returnDate, 
-    //         originalPrice, 
-    //         delayFee, 
-    //         clientes, 
-    //         jogos 
-    //     };
-    // });
-    // res.send(alugueis)
+        return { 
+            id, 
+            customerId, 
+            gameId, 
+            rentDate, 
+            daysRented, 
+            returnDate, 
+            originalPrice, 
+            delayFee, 
+            clientes, 
+            jogos 
+        };
+    });
+    res.send(alugueis)
     
   } catch (err) {
     res.status(500).send(err.message);
