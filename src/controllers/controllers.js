@@ -120,7 +120,7 @@ export async function atualizarCliente(req, res) {
 
 export async function listarAlugueis(req, res) {
   try {
-    const resultado = await db.query(` SELECT rentals.*, customers.name AS "nomeCliente", games.name AS nomeJogoFROM rentals
+    const resultado = await db.query(` SELECT rentals.*, customers.name AS "nomeCliente", games.name AS "nomeJogo" FROM rentals
     JOIN games ON rentals."gameId"=games.id
     JOIN customers ON rentals."customersId"=customers.id`);
 
