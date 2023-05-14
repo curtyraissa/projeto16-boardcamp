@@ -120,8 +120,42 @@ export async function atualizarCliente(req, res) {
 
 export async function listarAlugueis(req, res) {
   try {
-    //   const receitas = await db.query("SELECT * FROM receitas");
-    //   res.send(receitas.rows);
+    const resultado = await db.query(` SELECT rentals.*, customers.name AS "nomeCliente", games.name AS nomeJogoFROM rentals
+    JOIN games ON rentals."gameId"=games.id
+    JOIN customers ON rentals."customersId=customers.id`);
+
+    const alugueis = resultado.rows.map(row => {
+        const { 
+            id, 
+            customerId, 
+            gameId, 
+            rentDate, 
+            daysRented, 
+            returnDate, 
+            originalPrice, 
+            delayFee, 
+            nomeCliente, 
+            nomeJogo
+        } = row;
+        
+        const clientes = { id: customerId, name: nomeCliente };
+        const jogos = { id: gameId, name: nomeJogo };
+        
+        return { 
+            id, 
+            customerId, 
+            gameId, 
+            rentDate, 
+            daysRented, 
+            returnDate, 
+            originalPrice, 
+            delayFee, 
+            clientes, 
+            jogos 
+        };
+    });
+
+    res.send(alugueis)
   } catch (err) {
     res.status(500).send(err.message);
   }
@@ -167,7 +201,7 @@ export async function inserirAluguel(req, res) {
 
 export async function finalizarAluguel(req, res) {
   try {
-    //   const receitas = await db.query("SELECT * FROM receitas");
+    //   await db.query("SELECT * FROM receitas");
     //   res.send(receitas.rows);
   } catch (err) {
     res.status(500).send(err.message);
