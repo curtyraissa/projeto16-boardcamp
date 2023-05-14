@@ -215,8 +215,15 @@ export async function inserirAluguel(req, res) {
 export async function finalizarAluguel(req, res) {
     const {id} = req.params;
   try {
-    //   await db.query("SELECT * FROM receitas");
-    //   res.send(receitas.rows);
+    const aluguelExiste = await db.query(`SELECT rentals.*, games."pricePerDay"
+    FROM rentals 
+    JOIN games ON rentals."gameId" = games.id
+    WHERE rentals."id"=$1`, [id]);
+
+    if (aluguelExiste.rows.length == 0) return res.sendStatus(404);
+    if(aluguelExiste.rows[0].returnDate !== null) return res.sendStatus(400);
+
+    res.sendStatus(200)
   } catch (err) {
     res.status(500).send(err.message);
   }
