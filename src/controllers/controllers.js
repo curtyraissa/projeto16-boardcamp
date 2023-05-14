@@ -120,43 +120,57 @@ export async function atualizarCliente(req, res) {
 
 export async function listarAlugueis(req, res) {
   try {
-    const resultado = await db.query(` SELECT rentals.*, customers.name as "nomeCliente", games.name as "nomeJogo" 
-    FROM rentals
-    JOIN games ON rentals."gameId" = games.id
-    JOIN customers ON rentals."customersId" = customers.id`);
+    const resultado = await db.query(`SELECT 
+    rentals.id, 
+    rentals."customerId", 
+    rentals."gameId", 
+    rentals."rentDate", 
+    rentals."daysRented", 
+    rentals."returnDate", 
+    rentals."originalPrice", 
+    rentals."delayFee", 
+    customers.name AS "nomeCliente", 
+    games.name AS "nomeJogo"
+  FROM 
+    rentals 
+    JOIN customers ON rentals."customerId" = customers.id 
+    JOIN games ON rentals."gameId" = games.id;`);
 
-    const alugueis = resultado.rows.map(row => {
-        const { 
-            id, 
-            customerId, 
-            gameId, 
-            rentDate, 
-            daysRented, 
-            returnDate, 
-            originalPrice, 
-            delayFee, 
-            nomeCliente, 
-            nomeJogo
-        } = row;
-        
-        const clientes = { id: customerId, name: nomeCliente };
-        const jogos = { id: gameId, name: nomeJogo };
-        
-        return { 
-            id, 
-            customerId, 
-            gameId, 
-            rentDate, 
-            daysRented, 
-            returnDate, 
-            originalPrice, 
-            delayFee, 
-            clientes, 
-            jogos 
-        };
-    });
+    const alugueis = resultado.rows;
+    res.send(alugueis);
 
-    res.send(alugueis)
+    // const alugueis = resultado.rows.map(row => {
+    //     const { 
+    //         id, 
+    //         customerId, 
+    //         gameId, 
+    //         rentDate, 
+    //         daysRented, 
+    //         returnDate, 
+    //         originalPrice, 
+    //         delayFee, 
+    //         nomeCliente, 
+    //         nomeJogo
+    //     } = row;
+        
+    //     const clientes = { id: customerId, name: nomeCliente };
+    //     const jogos = { id: gameId, name: nomeJogo };
+        
+    //     return { 
+    //         id, 
+    //         customerId, 
+    //         gameId, 
+    //         rentDate, 
+    //         daysRented, 
+    //         returnDate, 
+    //         originalPrice, 
+    //         delayFee, 
+    //         clientes, 
+    //         jogos 
+    //     };
+    // });
+    // res.send(alugueis)
+    
   } catch (err) {
     res.status(500).send(err.message);
   }
