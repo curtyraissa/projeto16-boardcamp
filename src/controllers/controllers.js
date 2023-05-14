@@ -122,7 +122,7 @@ export async function listarAlugueis(req, res) {
   try {
     const resultado = await db.query(` SELECT rentals.*, customers.name AS "nomeCliente", games.name AS nomeJogoFROM rentals
     JOIN games ON rentals."gameId"=games.id
-    JOIN customers ON rentals."customersId=customers.id`);
+    JOIN customers ON rentals."customersId"=customers.id`);
 
     const alugueis = resultado.rows.map(row => {
         const { 
