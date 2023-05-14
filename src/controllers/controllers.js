@@ -151,8 +151,8 @@ export async function listarAlugueis(req, res) {
             nomeJogo
         } = row;
         
-        const clientes = { id: customerId, name: nomeCliente };
-        const jogos = { id: gameId, name: nomeJogo };
+        const customer = { id: customerId, name: nomeCliente };
+        const game = { id: gameId, name: nomeJogo };
         
         return { 
             id, 
@@ -163,8 +163,8 @@ export async function listarAlugueis(req, res) {
             returnDate, 
             originalPrice, 
             delayFee, 
-            clientes, 
-            jogos 
+            customer, 
+            game 
         };
     });
     res.send(alugueis)
