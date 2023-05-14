@@ -121,8 +121,8 @@ export async function atualizarCliente(req, res) {
 export async function listarAlugueis(req, res) {
   try {
     const resultado = await db.query(` SELECT rentals.*, customers.name AS "nomeCliente", games.name AS "nomeJogo" FROM rentals
-    JOIN games ON rentals."gameId"=games.id
-    JOIN customers ON rentals."customersId"=customers.id`);
+    JOIN games ON rentals."gameId" = games.id
+    JOIN customers ON rentals."customersId" = customers.id`);
 
     const alugueis = resultado.rows.map(row => {
         const { 
@@ -200,6 +200,7 @@ export async function inserirAluguel(req, res) {
   }
 
 export async function finalizarAluguel(req, res) {
+    const {id} = req.params;
   try {
     //   await db.query("SELECT * FROM receitas");
     //   res.send(receitas.rows);
