@@ -3,14 +3,14 @@
 
 ✅ Requisitos
 - Geral
-    - [ ]  A porta utilizada pelo seu servidor deve ser a **5000**.
-    - [ ]  Versionamento usando Git é obrigatório, crie um **repositório público** no seu perfil do GitHub **apenas com o código do back-end.**
-    - [ ]  Faça commits a cada funcionalidade implementada.
-    - [ ]  **Utilize dotenv.**
-    - [ ]  Não esqueça de criar o `.gitignore`: a `node_modules` e o `.env` não devem ser commitados.
-    - [ ]  Seu projeto deve ter, obrigatoriamente, os arquivos `package.json` e `package-lock.json`, que devem estar na raiz do projeto. Eles devem conter todas as **dependências** do projeto.
-    - [ ]  Adicione o código que inicia o servidor, com a função `listen`, no arquivo `src/app.js`.
-    - [ ]  Adicione um script no `package.json` para iniciar o servidor rodando `npm start` como no exemplo abaixo:
+    - [x]  A porta utilizada pelo seu servidor deve ser a **5000**.
+    - [x]  Versionamento usando Git é obrigatório, crie um **repositório público** no seu perfil do GitHub **apenas com o código do back-end.**
+    - [x]  Faça commits a cada funcionalidade implementada.
+    - [x]  **Utilize dotenv.**
+    - [x]  Não esqueça de criar o `.gitignore`: a `node_modules` e o `.env` não devem ser commitados.
+    - [x]  Seu projeto deve ter, obrigatoriamente, os arquivos `package.json` e `package-lock.json`, que devem estar na raiz do projeto. Eles devem conter todas as **dependências** do projeto.
+    - [x]  Adicione o código que inicia o servidor, com a função `listen`, no arquivo `src/app.js`.
+    - [x]  Adicione um script no `package.json` para iniciar o servidor rodando `npm start` como no exemplo abaixo:
         
         ```json
         // package.json
@@ -23,7 +23,7 @@
         }
         ```
         
-    - [ ]  A estrutura de arquivos e pastas do projeto deve seguir o padrão aprendido nas últimas semanas, com as camadas `controllers`, `routers`, `middlewares` e `schemas` (onde for necessário).
+    - [x]  A estrutura de arquivos e pastas do projeto deve seguir o padrão aprendido nas últimas semanas, com as camadas `controllers`, `routers`, `middlewares` e `schemas` (onde for necessário).
 - CRUD de Jogos [Create | Read]
     - Formato de um jogo (tabela `games`)
         
@@ -245,7 +245,7 @@
             - Ao excluir um aluguel, deve verificar se o `id` fornecido existe. Se não, deve responder com **status 404.**
             - Ao excluir um aluguel, deve verificar se o aluguel já não está finalizado (ou seja, `returnDate` já está preenchido). Se não estiver finalizado, deve responder com **status 400.**
 - Deploy
-    - [ ]  Deverá ser realizado o deploy da sua API e do banco de dados utilizando a ferramenta Render.
+    - [x]  Deverá ser realizado o deploy da sua API e do banco de dados utilizando a ferramenta Render.
 
 
 ## 🛠 &nbsp;Skills
@@ -268,8 +268,10 @@
 npm run dev
 
 # rodar banco
-mongod --dbpath ~/.mongo
-
+brew services start postgresql 
+psql postgres 
+brew services restart postgresql@14
+   
 # matar a porta comando no MAC
 kill -9 PID
 
